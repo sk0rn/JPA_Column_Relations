@@ -1,11 +1,15 @@
 package hibernate.db.dao;
 
+import hibernate.db.entities.Brand;
 import hibernate.db.entities.Document;
+import hibernate.db.entities.MobileStore;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import hibernate.db.entities.Mobile;
+
+import java.util.Arrays;
 
 @Repository
 public class MobilePhoneDao {
@@ -19,14 +23,19 @@ public class MobilePhoneDao {
     public Mobile getPhoneById(long id) {
         Session session = sessionFactory.openSession();
         Mobile mobile = session.get(Mobile.class, id);
+        Brand brand = new Brand(13L, "Siemens", "Germany");
+        Mobile mob2 = new Mobile(5L, "m35", 20000,
+                brand);
+        mob2.addStore(new MobileStore(10L, "Best store"));
+        brand.setMobiles(Arrays.asList(mob2));
+
         session.close();
         return mobile;
     }
 
     public void addPhone(Mobile mobile) {
         Session session = sessionFactory.openSession();
-        //mobile.setBrand(session.get(Brand.class, mobile.getBrand().getId()));
-        session.refresh(mobile.getBrand()); // если привязываться к имеющимося id
+        session.refresh(mobile.getBrand()); // если привязываться к имеющимуся id
         session.beginTransaction();
         session.save(mobile);
         mobile.setCost(30000);

@@ -12,8 +12,12 @@ public class Mobile {
     private String model;
     private Integer cost;
     private Brand brand;
-    private Set<MobileStore> stores = new HashSet<>();
+    private Set<MobileStore> stores;
     private Document document;
+
+    {
+        this.stores = new HashSet<>();
+    }
 
     public Mobile() {
     }
@@ -62,6 +66,7 @@ public class Mobile {
 
     @ManyToOne
     @JoinColumn(name = "brand_id", referencedColumnName = "id")
+
     public Brand getBrand() {
         return brand;
     }
@@ -72,9 +77,7 @@ public class Mobile {
 
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "mobile_stores",
-            //foreign key for EmployeeEntity in employee_car table
             joinColumns = @JoinColumn(name = "mobile_id"),
-            //foreign key for other side - EmployeeEntity in employee_car table
             inverseJoinColumns = @JoinColumn(name = "store_id"))
     public Set<MobileStore> getStores() {
         return stores;
@@ -98,7 +101,6 @@ public class Mobile {
         this.document = document;
     }
 
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -106,20 +108,20 @@ public class Mobile {
 
         Mobile mobile = (Mobile) o;
 
-        if (cost != mobile.cost) return false;
         if (id != null ? !id.equals(mobile.id) : mobile.id != null) return false;
         if (model != null ? !model.equals(mobile.model) : mobile.model != null) return false;
+        if (cost != null ? !cost.equals(mobile.cost) : mobile.cost != null) return false;
         if (brand != null ? !brand.equals(mobile.brand) : mobile.brand != null) return false;
-        return stores != null ? stores.equals(mobile.stores) : mobile.stores == null;
+        return document != null ? document.equals(mobile.document) : mobile.document == null;
     }
 
     @Override
     public int hashCode() {
         int result = id != null ? id.hashCode() : 0;
         result = 31 * result + (model != null ? model.hashCode() : 0);
-        result = 31 * result + cost;
+        result = 31 * result + (cost != null ? cost.hashCode() : 0);
         result = 31 * result + (brand != null ? brand.hashCode() : 0);
-        result = 31 * result + (stores != null ? stores.hashCode() : 0);
+        result = 31 * result + (document != null ? document.hashCode() : 0);
         return result;
     }
 
@@ -130,7 +132,7 @@ public class Mobile {
                 ", model='" + model + '\'' +
                 ", cost=" + cost +
                 ", brand=" + brand +
-                ", stores=" + stores +
+               // ", stores=" + stores +
                 '}';
     }
 }

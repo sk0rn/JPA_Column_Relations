@@ -9,7 +9,11 @@ import java.util.Set;
 public class MobileStore {
     private Long id;
     private String name;
-    private Set<Mobile> mobiles = new HashSet<>();
+    private Set<Mobile> mobiles;
+
+    {
+        this.mobiles = new HashSet<>();
+    }
 
     public MobileStore() {
     }
@@ -45,9 +49,7 @@ public class MobileStore {
 
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "mobile_stores",
-            //foreign key for EmployeeEntity in employee_car table
             joinColumns = @JoinColumn(name = "store_id"),
-            //foreign key for other side - EmployeeEntity in employee_car table
             inverseJoinColumns = @JoinColumn(name = "mobile_id"))
     public Set<Mobile> getMobiles() {
         return mobiles;
@@ -62,18 +64,16 @@ public class MobileStore {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        MobileStore that = (MobileStore) o;
+        MobileStore store = (MobileStore) o;
 
-        if (id != null ? !id.equals(that.id) : that.id != null) return false;
-        if (name != null ? !name.equals(that.name) : that.name != null) return false;
-        return mobiles != null ? mobiles.equals(that.mobiles) : that.mobiles == null;
+        if (id != null ? !id.equals(store.id) : store.id != null) return false;
+        return name != null ? name.equals(store.name) : store.name == null;
     }
 
     @Override
     public int hashCode() {
         int result = id != null ? id.hashCode() : 0;
         result = 31 * result + (name != null ? name.hashCode() : 0);
-        result = 31 * result + (mobiles != null ? mobiles.hashCode() : 0);
         return result;
     }
 
@@ -82,7 +82,7 @@ public class MobileStore {
         return "MobileStore{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-                ", mobiles=" + mobiles +
+                //", mobiles=" + mobiles +
                 '}';
     }
 }

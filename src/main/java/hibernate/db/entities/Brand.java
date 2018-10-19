@@ -1,6 +1,7 @@
 package hibernate.db.entities;
 
 import javax.persistence.*;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -9,7 +10,7 @@ public class Brand {
     private Long id;
     private String name;
     private String country;
-    private Set<Mobile> mobiles;
+    private List<Mobile> mobiles;
 
     public Brand() {
     }
@@ -55,11 +56,11 @@ public class Brand {
     }
 
     @OneToMany(mappedBy = "brand", fetch = FetchType.LAZY)
-    public Set<Mobile> getMobiles() {
+    public List<Mobile> getMobiles() {
         return mobiles;
     }
 
-    public void setMobiles(Set<Mobile> mobiles) {
+    public void setMobiles(List<Mobile> mobiles) {
         this.mobiles = mobiles;
     }
 
@@ -72,8 +73,7 @@ public class Brand {
 
         if (id != null ? !id.equals(brand.id) : brand.id != null) return false;
         if (name != null ? !name.equals(brand.name) : brand.name != null) return false;
-        if (country != null ? !country.equals(brand.country) : brand.country != null) return false;
-        return mobiles != null ? mobiles.equals(brand.mobiles) : brand.mobiles == null;
+        return country != null ? country.equals(brand.country) : brand.country == null;
     }
 
     @Override
@@ -81,7 +81,6 @@ public class Brand {
         int result = id != null ? id.hashCode() : 0;
         result = 31 * result + (name != null ? name.hashCode() : 0);
         result = 31 * result + (country != null ? country.hashCode() : 0);
-        result = 31 * result + (mobiles != null ? mobiles.hashCode() : 0);
         return result;
     }
 

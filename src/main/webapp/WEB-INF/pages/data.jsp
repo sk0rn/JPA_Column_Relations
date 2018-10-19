@@ -11,8 +11,8 @@
     <title>Title</title>
 </head>
 <body>
-<%--${phone.model}<BR>--%>
-<%--${phone.cost}--%>
-${document}<br>
+${phone.model}<BR>
+${phone.cost}
+<%--${document}<br>--%>
 </body>
 </html>

@@ -23,7 +23,7 @@ public class PhoneController {
 
     @RequestMapping(value = "/getPhone", method = RequestMethod.GET)
     public String getAllPhones(Model model) {
-        model.addAttribute("phone", mobilePhoneDao.getPhoneById(2));
+        model.addAttribute("phone", mobilePhoneDao.getPhoneById(5));
         return "data";
     }
 
